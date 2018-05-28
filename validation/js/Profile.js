@@ -27,3 +27,43 @@ const Profile = props => {
         </div>
     );
 };
+
+Profile.propTypes = {
+    img: PropTypes.string.isRequired,
+    url: (props, propName, componentName) => {
+        let linkUrl = props[propName];
+        let isLinkUrl = (typeof linkUrl === 'string') &&
+            /https:\/\/vk.com\/(id[0-9]+|[A-Za-z0-9_-]+)/;
+        if(!isLinkUrl) {
+            return new Error(`Неверный параметр ${propName} в компоненте
+${componentName}: параметр должен быть ссылкой на профиль вконтакте`);
+        }
+        return null;
+    },
+    birthday: (props, propName, componentName) =>{
+        let birthdayDateProp = props[propName];
+        if(birthdayDateProp) {
+            let isDate = (typeof  birthdayDateProp === 'string') &&
+                /^[\d]{4}\-[\d]{2}\-[\d]{2}$/;
+
+            if (!isDate) {
+                console.log('birthdayDateProp', birthdayDateProp)
+                return new Error(`Неверный параметр ${propName} в компоненте
+${componentName}: параметр должен быть датой вида 1994-12-30`);
+            }
+            else {
+                let birthdayData = new Date(...birthdayDateProp.split('-')).getTime();
+                let now = new Date().getTime();
+                if (now - birthdayData < 0) {
+                    return new Error(`Неверный параметр ${propName} в компоненте
+${componentName}: параметр должен быть датой не позже сегодншнего дня`);
+                }
+            }
+        }
+        return null;
+    }
+}
+
+Profile.defaultProps = {
+    img: './images/profile.jpg'
+}
