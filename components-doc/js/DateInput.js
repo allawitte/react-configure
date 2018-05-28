@@ -9,3 +9,23 @@ const DateInput = props => {
         </div>
     )
 };
+
+const datePropType = (props, propName, componentName) => {
+    let date = props[propName];
+    let isDate = (typeof  date === 'string') &&
+        /^[\d]{4}\-[\d]{2}\-[\d]{2}$/;
+
+    if(!isDate) {
+        return new Error(`Неверный параметр ${propName} в компоненте
+${componentName}: параметр должен быть датой вида 1994-12-30`);
+    }
+    return null;
+}
+
+DateInput.propTypes = {
+    onChange: PropTypes.func,
+    name: PropTypes.string.isRequired,
+    required: PropTypes.bool,
+    value: datePropType
+};
+DateInput.defaultProps = '1996-12-26';
