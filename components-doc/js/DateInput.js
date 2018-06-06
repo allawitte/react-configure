@@ -12,8 +12,6 @@ const DateInput = props => {
 
 const datePropType = (props, propName, componentName) => {
     let date = props[propName];
-    console.log('date', date)
-    console.log(/^\d{4}\-\d{2}\-\d{2}$/.test(date));
     let isDate = (typeof  date === 'string') &&
         /^\d{4}\-\d{2}\-\d{2}$/.test(date);
 
@@ -31,4 +29,6 @@ DateInput.propTypes = {
     value: datePropType
 };
 const today = new Date();
-DateInput.defaultProps = today.getFullYear()+'-'+today.getMonth()+1+'-'+today.getDate();
+DateInput.defaultProps = {
+    value: today.getFullYear()+'-'+today.getMonth()+1+'-'+today.getDate()
+};

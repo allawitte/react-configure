@@ -33,7 +33,7 @@ Profile.propTypes = {
     url: (props, propName, componentName) => {
         let linkUrl = props[propName];
         let isLinkUrl = (typeof linkUrl === 'string') &&
-            /https:\/\/vk.com\/(id[0-9]+|[A-Za-z0-9_-]+)/;
+            /^https:\/\/vk.com\/(id[0-9]+|[A-Za-z0-9_-]+)$/.test(linkUrl);
         if(!isLinkUrl) {
             return new Error(`Неверный параметр ${propName} в компоненте
 ${componentName}: параметр должен быть ссылкой на профиль вконтакте`);
@@ -44,7 +44,7 @@ ${componentName}: параметр должен быть ссылкой на п�
         let birthdayDateProp = props[propName];
         if(birthdayDateProp) {
             let isDate = (typeof  birthdayDateProp === 'string') &&
-                /^[\d]{4}\-[\d]{2}\-[\d]{2}$/;
+                /^\d{4}\-\d{2}\-\d{2}$/.test(birthdayDateProp);
 
             if (!isDate) {
                 console.log('birthdayDateProp', birthdayDateProp)
