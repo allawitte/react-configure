@@ -12,8 +12,10 @@ const DateInput = props => {
 
 const datePropType = (props, propName, componentName) => {
     let date = props[propName];
+    console.log('date', date)
+    console.log(/^\d{4}\-\d{2}\-\d{2}$/.test(date));
     let isDate = (typeof  date === 'string') &&
-        /^[\d]{4}\-[\d]{2}\-[\d]{2}$/;
+        /^\d{4}\-\d{2}\-\d{2}$/.test(date);
 
     if(!isDate) {
         return new Error(`Неверный параметр ${propName} в компоненте
@@ -28,4 +30,5 @@ DateInput.propTypes = {
     required: PropTypes.bool,
     value: datePropType
 };
-DateInput.defaultProps = '1996-12-26';
+const today = new Date();
+DateInput.defaultProps = today.getFullYear()+'-'+today.getMonth()+1+'-'+today.getDate();
